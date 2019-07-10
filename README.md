@@ -90,6 +90,7 @@ const cases = [
 
 
 **describle：**
+
 |字段|解释|
 |--|--| 
 |newBrowser|一般连续写多个 describe，而且后面的 describe 依赖前面的 describe （比如在之前的 action 中本地记录过cookie、localStorage、sessionStorage），所以默认一个完整测试中，新的 describe 不重新打开浏览器。反之，将会销毁之前的浏览器，重新打开浏览器。|

@@ -6,7 +6,7 @@ yarn-error.log*
 node_modules/
 package-lock.json
 node_modules/
-./test/demo/dist
-./test/demo/node_modules
-./test/demo/package-lock.json
+test/demo/dist
+test/demo/node_modules
+test/demo/package-lock.json
 
