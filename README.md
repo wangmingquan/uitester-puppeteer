@@ -12,7 +12,7 @@ npm i uitester-puppeteer -S
 使用
 
 ```javascript
-const Tester = require('./index.js');
+const Tester = require('uitester-puppeteer');
 const cases = [];
 const options = {};
 let tester = new Tester(list, options);

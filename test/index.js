@@ -4,7 +4,7 @@ const log = require('log-mini');
 
 let doTest = function (testcase) {
   return new Promise((resolve, reject) => {
-    let uiTester = new Uitester([testcase], {
+    let uiTester = new Uitester(testcase, {
       dev: true,
       screenshotPrePath: '/Users/wangmingquan/Downloads'
     });
@@ -54,7 +54,11 @@ let doTest = function (testcase) {
 };
 
 (async () => {
-  for (let i in cases) {
-    await doTest(cases[i]);
-  }
+  // 单个case测试
+  // for (let i in cases) {
+  //   await doTest([cases[i]]);
+  // }
+
+  // 作为一个整体测试
+  await doTest(cases);
 })();
