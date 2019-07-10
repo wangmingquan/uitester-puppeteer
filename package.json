@@ -1,0 +1,30 @@
+{
+  "name": "uitester-puppeteer",
+  "version": "1.0.0",
+  "description": "基于puppeteer的UI自动化测试",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangmingquan/uiteser-puppeteer.git"
+  },
+  "keywords": [
+    "uiteser",
+    "puppeteer"
+  ],
+  "author": "wangmingquan",
+  "license": "ISC",
+  "dependencies": {
+    "log-mini": "^1.0.0",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.24.0",
+    "puppeteer": "^1.17.0"
+  },
+  "bugs": {
+    "url": "https://github.com/wangmingquan/uiteser-puppeteer/issues"
+  },
+  "homepage": "https://github.com/wangmingquan/uiteser-puppeteer#readme"
+}
