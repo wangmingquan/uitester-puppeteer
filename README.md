@@ -150,6 +150,7 @@ setCookie时，其value示例：
 
 | 字段 | 说明 | 类型 |
 |--|--|--|
+| name | 验证器名称 | string | 
 | selector | 选择器 | string | 
 | condition | 条件, 参考下边 **“it.condition字段定义”** | string |
 | value | 参考下边 **“it.condition字段定义”** | boolean \| string \| number |

@@ -25,7 +25,6 @@ module.exports = async (tester, it) => {
   await page.waitFor(it.selector, {
     timeout: 1000
   }).catch(e => {
-    console.log(e);
     throw(`未找到selector <${it.selector}>`);
   });
 

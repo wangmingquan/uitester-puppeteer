@@ -44,10 +44,9 @@ let doTest = function (testcase) {
     //   console.log(ev);
     // });
     uiTester.on('complete', (data) => {
-      data.status === 'fail' ? log.error('测试结束') : log.success('测试成功');
+      data.status === 'fail' ? log.error('测试失败') : log.success('测试成功');
       log('测试报告信息:');
       console.log(data);
-      // console.log(data.result[0]);
       resolve();
     });
   });

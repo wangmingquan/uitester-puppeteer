@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const describe = require('./describe.js');
 
 module.exports = async (tester) => {
-  let failFlag = false;
+  let allFailFlag = false;
   let err = null;
   let browser = null;
   let list = tester.list;
@@ -16,6 +16,7 @@ module.exports = async (tester) => {
   };
 
   for (let item of list) {
+    let failFlag = false;
     // 如果需要重新生成用一个浏览器，则关闭之前的浏览器
     if (browser && item.newBrowser) {
       await closePage();
@@ -68,21 +69,24 @@ module.exports = async (tester) => {
       failFlag = true;
     });
 
+    // 多个测试用例，其中一个测试失败，后面的测试将继续
     if (failFlag) {
-      break;
+      allFailFlag = true;
+      item.success = false;
+      item.err = err;
+    } else {
+      item.success = true;
     }
   }
 
-  
   // 全部测试完毕，关闭页面，关闭浏览器
   await closePage();
   await browser.close();
 
-  if (failFlag) {
-    tester.emit('fail', err);
+  if (allFailFlag) {
+    tester.emit('fail');
     tester.emit('complete', {
       status: 'fail',
-      err,
       result: tester.list
     });
   } else {

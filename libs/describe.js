@@ -24,13 +24,13 @@ module.exports = async (tester, describe) => {
 
   if (!failFlag) {
     // 执行最终判断
-    
+
     let itRel = await it(tester, describe.it).catch(e => {
       err = e;
       // it 执行失败, 测试失败
       failFlag = true;
     });
-    
+
     if (!itRel) {
       err = new Error(`
         测试用例 <${describe.it.name}>验证失败:
@@ -44,7 +44,7 @@ module.exports = async (tester, describe) => {
     }
   }
 
-  if (!failFlag && describe.afterIt) {
+  if (describe.afterIt) {
     // 执行判断后action操作
     await doActions(describe.afterIt);
   }
