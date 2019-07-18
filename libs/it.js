@@ -1,4 +1,5 @@
 let conditionsMap = require('./its/index.js');
+const highlightSelector = require('./utils/highlightSelector');
 
 module.exports = async (tester, it) => {
   let _st_it = new Date().getTime();
@@ -38,7 +39,9 @@ module.exports = async (tester, it) => {
 
   // 截图
   if (it.screenshot) {
-    item.screenshotUrl = await tester.screenshot();
+    await highlightSelector(tester, it.selector, async () => {
+      it.screenshotUrl = await tester.screenshot();
+    });
   }
 
   it._costTime = new Date().getTime() - _st_it;

@@ -12,7 +12,8 @@ let describe = {
       name: '输入用户名',
       action: 'type',
       selector: '#username',
-      value: 'admin'
+      value: 'admin',
+      screenshot: true
     },
     {
       name: '输入密码',
@@ -24,13 +25,15 @@ let describe = {
     {
       name: '点击登录',
       action: 'click',
-      selector: '#loginSubmitBtn'
+      selector: '#loginSubmitBtn',
+      screenshot: true
     },
     {
       action: 'frame',
       name: '进入iframe',
       frameName: 'iframeTest',
-      waitBefore: 200
+      waitBefore: 200,
+      screenshot: true
     },
     {
       name: 'frame里面进行了点击',
@@ -47,23 +50,23 @@ let describe = {
 
 // 维护一堆case
 const its = [
-  { name: '测试isEmpty', condition: 'isEmpty', selector: '#result' },
-  { name: '测试isEmptyHtml', condition: 'isEmptyHtml', selector: '#result' },
-  { name: '测试isNotEmpty', condition: 'isNotEmpty', selector: '#result' },
-  { name: '测试isNotEmptyHtml', condition: 'isNotEmptyHtml', selector: '#result' },
-  { name: '测试equal', condition: 'equal', selector: '#result', value: '100' },
-  { name: '测试equalHtml', condition: 'equalHtml', selector: '#result', value: '100' },
-  { name: '测试notEqual', condition: 'notEqual', selector: '#result', value: '100' },
-  { name: '测试startWith', condition: 'startWith', selector: '#result', value: '100' },
-  { name: '测试endWith', condition: 'endWith', selector: '#result', value: '100' },
-  { name: '测试notStartWith', condition: 'notStartWith', selector: '#result', value: '100' },
-  { name: '测试notEndWith', condition: 'notEndWith', selector: '#result', value: '100' },
-  { name: '测试contain', condition: 'contain', selector: '#result', value: '100' },
-  { name: '测试notContain', condition: 'notContain', selector: '#result', value: '100' },
-  { name: '测试countEqual', condition: 'countEqual', selector: '#list>li', value: 3 },
-  { name: '测试countNotEqual', condition: 'countNotEqual', selector: '#list>li', value: 3 },
-  { name: '测试countMore', condition: 'countMore', selector: '#list>li', value: 3 },
-  { name: '测试countLess', condition: 'countLess', selector: '#list>li', value: 3 }
+  { name: '测试isEmpty', condition: 'isEmpty', selector: '#result', screenshot: true },
+  // { name: '测试isEmptyHtml', condition: 'isEmptyHtml', selector: '#result' },
+  // { name: '测试isNotEmpty', condition: 'isNotEmpty', selector: '#result' },
+  // { name: '测试isNotEmptyHtml', condition: 'isNotEmptyHtml', selector: '#result' },
+  // { name: '测试equal', condition: 'equal', selector: '#result', value: '100' },
+  // { name: '测试equalHtml', condition: 'equalHtml', selector: '#result', value: '100' },
+  // { name: '测试notEqual', condition: 'notEqual', selector: '#result', value: '100' },
+  // { name: '测试startWith', condition: 'startWith', selector: '#result', value: '100' },
+  // { name: '测试endWith', condition: 'endWith', selector: '#result', value: '100' },
+  // { name: '测试notStartWith', condition: 'notStartWith', selector: '#result', value: '100' },
+  // { name: '测试notEndWith', condition: 'notEndWith', selector: '#result', value: '100' },
+  // { name: '测试contain', condition: 'contain', selector: '#result', value: '100' },
+  // { name: '测试notContain', condition: 'notContain', selector: '#result', value: '100' },
+  // { name: '测试countEqual', condition: 'countEqual', selector: '#list>li', value: 3 },
+  // { name: '测试countNotEqual', condition: 'countNotEqual', selector: '#list>li', value: 3 },
+  // { name: '测试countMore', condition: 'countMore', selector: '#list>li', value: 3 },
+  // { name: '测试countLess', condition: 'countLess', selector: '#list>li', value: 3 }
 ];
 let cases = [];
 for (let it of its) {

@@ -1,4 +1,5 @@
 const actions = require('./actions/index.js');
+const highlightSelector = require('./utils/highlightSelector');
 
 module.exports = async (tester, action) => {
   let page = tester.getPage();
@@ -22,14 +23,16 @@ module.exports = async (tester, action) => {
     // action执行
     await actions[action.action](tester, action);
 
+    // 截图
+    if (action.screenshot) {
+      await highlightSelector(tester, action.selector, async () => {
+        action.screenshotUrl = await tester.screenshot();
+      })
+    }
+
     // action后置等待
     if (action.waitAfter) {
       await page.waitFor(action.waitAfter);
-    }
-
-    // 截图
-    if (action.screenshot) {
-      action.screenshotUrl = await tester.screenshot();
     }
 
     action._costTime = new Date().getTime() - _st_action;

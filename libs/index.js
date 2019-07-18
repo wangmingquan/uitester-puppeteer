@@ -43,11 +43,20 @@ class Tester extends events.EventEmitter {
     });
     let fileName = `${+ new Date}.png`;
     let finalyPath = path.join(dir, fileName);
+    let err;
     await mkdirpPromise();
     await this.page.screenshot({
       path: finalyPath
+    }).catch(err => {
+      // 截图失败啦
+      console.log('截图失败', err);
+      err = err;
     });
-    return finalyPath;
+    if (!err) {
+      return finalyPath;
+    } else {
+      return '';
+    }
   }
 }
 
