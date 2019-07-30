@@ -127,7 +127,7 @@ const cases = [
 | type | 表单输入 |
 | frame | 切换到 iframe  |
 | mainframe | （切换到 iframe 之后）切换到父窗口 |
-| setCookie | 设置 cookie | 
+| setCookie | 设置 cookie |
 | script | 执行原生脚本， string: script 或者 promise: fun | Y |
 
 setCookie时，其value示例：
@@ -139,7 +139,7 @@ setCookie时，其value示例：
   url: string,
   domain: string,
   path: string,
-  expires: string,
+  expires: string|number,
   httpOnly: boolean,
   secure: boolean,
   sameSite: boolean
