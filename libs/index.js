@@ -5,7 +5,7 @@ const mkdirp = require('mkdirp');
 const moment = require('moment');
 
 class Tester extends events.EventEmitter {
-  constructor(list, options = {}) {
+  constructor (list, options = {}) {
     super();
     this.list = list;
     this.options = options;
@@ -16,15 +16,48 @@ class Tester extends events.EventEmitter {
     this.start();
   }
 
-  async start() {
+  async start () {
+    this.formarteList();
     await start(this);
   }
 
-  getPage() {
+  /**
+   * @description 对测试用例进行格式化：支持xpath
+   * @memberof Tester
+   * @returns {void}
+   */
+  formarteList () {
+    let xPathToCss = (xpath) => {
+      return xpath
+        .replace(/\[(\d+?)\]/g, function (s, m1) { return '[' + (m1 - 1) + ']'; })
+        .replace(/\/{2}/g, '')
+        .replace(/\/+/g, ' > ')
+        .replace(/@/g, '')
+        .replace(/\[(\d+)\]/g, ':eq($1)')
+        .replace(/^\s+/, '');
+    };
+    for (let item of this.list) {
+      for (let action of item.actions) {
+        if (/^\/\/.+/.test(action.selector)) {
+          action.selector = xPathToCss(action.selector);
+        }
+      }
+      if (/^\/\/.+/.test(item.it.selector)) {
+        item.it.selector = xPathToCss(item.it.selector);
+      }
+      for (let action of item.afterIt || []) {
+        if (/^\/\/.+/.test(action.selector)) {
+          action.selector = xPathToCss(action.selector);
+        }
+      }
+    }
+  }
+
+  getPage () {
     return this.iframeStatus === 'main' ? this.page : this.iframe;
   }
 
-  async screenshot() {
+  async screenshot () {
     let { screenshotPrePath } = this.options;
     if (!screenshotPrePath) {
       return '';
@@ -41,16 +74,16 @@ class Tester extends events.EventEmitter {
         }
       });
     });
-    let fileName = `${+ new Date}.png`;
+    let fileName = `${+new Date()}.png`;
     let finalyPath = path.join(dir, fileName);
     let err;
     await mkdirpPromise();
     await this.page.screenshot({
       path: finalyPath
-    }).catch(err => {
+    }).catch(_err => {
       // 截图失败啦
       console.log('截图失败', err);
-      err = err;
+      err = _err;
     });
     if (!err) {
       return finalyPath;

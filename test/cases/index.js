@@ -11,7 +11,8 @@ let describe = {
     {
       name: '输入用户名',
       action: 'type',
-      selector: '#username',
+      // selector: '#username',
+      selector: '//*[@id="username"]',
       value: 'admin',
       screenshot: true
     },
@@ -73,7 +74,7 @@ for (let it of its) {
   cases.push({
     ...describe,
     it
-  })
+  });
 }
 
 module.exports = cases;

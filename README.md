@@ -1,4 +1,5 @@
 # uitester-puppeteer
+
 基于puppeteer的UI自动化测试
 
 ## 使用
@@ -83,30 +84,29 @@ const cases = [
 |属性|说明|类型|默认值|
 |--|--|--|--|
 | dev | 决定是否打开调试日志、是否headless | boolean | false |
-| sandBox | 是否沙盒模式 | boolean | false | 
+| sandBox | 是否沙盒模式 | boolean | false |
 | clientWidth | 默认视口宽度 | number | 1024 |
 | clientHeight | 默认视口高度 | number | 768 |
 | screenshotPrePath | 截图存放目录，需要保证其写入权限没问题。目录不存在，会自动创建。 | string | 无 |
 
-
 **describle：**
 
 |字段|解释|
-|--|--| 
+|--|--|
 |newBrowser|一般连续写多个 describe，而且后面的 describe 依赖前面的 describe （比如在之前的 action 中本地记录过cookie、localStorage、sessionStorage），所以默认一个完整测试中，新的 describe 不重新打开浏览器。反之，将会销毁之前的浏览器，重新打开浏览器。|
 | newPage | 一般连续写多个 describe，而且后面的 describe 依赖前面的 describe （比如在之前的 action 中已经登陆过，进入到了某个页面），所以默认一个完整测试中，新的 describe 不重新打开新的页面。反之，将会关闭之前的page，重新打开一个新的page（这时候往往需要重新 open 一个 url） |
 | actions | 执行的动作 |
 | it | 执行的验证 |
 | afterIt | 数据格式和actions是一样的，其作用一般是用来清除前面actions带来的副作用。比如，测试过程中建立了一条数据，我们就可以在afterIt里面定义action，把这条数据删除掉。 |
 
-**actions&&afterIt字段定义**
+**actions && afterIt字段定义：**
 
 | 字段 | 解释 | 值 |
 |--|--|--|
 | name | 动作名称 | - |
 | value | 动作可能涉及到的内容，比如打开的url、填充的值 | - |
 | action | 执行动作，后续会逐步扩展 | 详情见action管理表格 |
-| selector | 选择器 | - |
+| selector | 选择器 | 支持css选择器和xpath |
 | screenshot | 产品报告中是否截图（初始化不传screenshotPrePath，则不会截图） | 默认false |
 | waitFor | 等待当前selector出现 | 超时时间，ms，默认1000ms |
 | waitBefore | 动作前延时 | ms |
@@ -118,7 +118,7 @@ const cases = [
 
 > 当action===frame的时候，可以通过iframe的 frameName、frameUrl、frameTitle属性来定位（只需要一个字段即可，frameName > frameUrl > frameTitle）
 
-**action管理**
+**action管理：**
 
 | name | 说明 |
 |--|--|
@@ -146,17 +146,17 @@ setCookie时，其value示例：
 }
 ```
 
-**it字段定义**
+**it字段定义：**
 
 | 字段 | 说明 | 类型 |
 |--|--|--|
-| name | 验证器名称 | string | 
-| selector | 选择器 | string | 
+| name | 验证器名称 | string |
+| selector | 选择器 | string |
 | condition | 条件, 参考下边 **“it.condition字段定义”** | string |
 | value | 参考下边 **“it.condition字段定义”** | boolean \| string \| number |
 | screenshot | 是否截图 | false |
 
-**it.condition字段定义**
+**it.condition字段定义：**
 
 | name | 说明 | 对应value类型 |
 |--|--|--|
