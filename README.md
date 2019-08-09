@@ -17,7 +17,9 @@ const Tester = require('uitester-puppeteer');
 const cases = [
   // ...
 ];
-const options = {};
+const options = {
+  // ...
+};
 let tester = new Tester(cases, options);
 
 tester.on('start', () => {});
