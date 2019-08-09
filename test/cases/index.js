@@ -42,6 +42,10 @@ let describe = {
       selector: '#countBtn'
     },
     {
+      name: '仅截图，无操作',
+      action: 'screenshot'
+    },
+    {
       name: '退出iframe',
       action: 'mainFrame',
       screenshot: true
@@ -51,9 +55,14 @@ let describe = {
 
 // 维护一堆case
 const its = [
-  { name: '测试isEmpty', condition: 'isEmpty', selector: '#result', screenshot: true },
+  // {
+  //   name: '测试isEmpty',
+  //   condition: 'isEmpty',
+  //   selector: '#result',
+  //   screenshot: true
+  // },
   // { name: '测试isEmptyHtml', condition: 'isEmptyHtml', selector: '#result' },
-  // { name: '测试isNotEmpty', condition: 'isNotEmpty', selector: '#result' },
+  { name: '测试isNotEmpty', condition: 'isNotEmpty', selector: '#result' },
   // { name: '测试isNotEmptyHtml', condition: 'isNotEmptyHtml', selector: '#result' },
   // { name: '测试equal', condition: 'equal', selector: '#result', value: '100' },
   // { name: '测试equalHtml', condition: 'equalHtml', selector: '#result', value: '100' },

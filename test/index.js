@@ -3,14 +3,14 @@ let cases = require('./cases');
 const log = require('log-mini');
 
 let doTest = function (testcase) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let uiTester = new Uitester(testcase, {
       dev: true,
       screenshotPrePath: '/Users/wangmingquan/Downloads'
     });
 
     uiTester.on('start', () => {
-      log('开始启动测试')
+      log('开始启动测试');
     });
 
     uiTester.on('describe_start', (ev) => {

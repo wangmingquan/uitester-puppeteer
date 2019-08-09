@@ -21,13 +21,15 @@ module.exports = async (tester, action) => {
       });
     }
     // action执行
-    await actions[action.action](tester, action);
+    if (action.action !== 'screenshot') {
+      await actions[action.action](tester, action);
+    }
 
     // 截图
-    if (action.screenshot) {
+    if (action.screenshot || action.action === 'screenshot') {
       await highlightSelector(tester, action.selector, async () => {
         action.screenshotUrl = await tester.screenshot();
-      })
+      });
     }
 
     // action后置等待

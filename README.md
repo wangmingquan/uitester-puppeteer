@@ -128,7 +128,8 @@ const cases = [
 | frame | 切换到 iframe  |
 | mainframe | （切换到 iframe 之后）切换到父窗口 |
 | setCookie | 设置 cookie |
-| script | 执行原生脚本， string: script 或者 promise: fun | Y |
+| script | 执行原生脚本， string: script 或者 promise: fun |
+| screenshot | 仅截图 |
 
 setCookie时，其value示例：
 
