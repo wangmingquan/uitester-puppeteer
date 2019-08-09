@@ -14,9 +14,11 @@ npm i uitester-puppeteer -S
 
 ```javascript
 const Tester = require('uitester-puppeteer');
-const cases = [];
+const cases = [
+  // ...
+];
 const options = {};
-let tester = new Tester(list, options);
+let tester = new Tester(cases, options);
 
 tester.on('start', () => {});
 tester.on('describe_start', (describe) => {});
