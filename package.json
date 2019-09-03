@@ -1,6 +1,6 @@
 {
   "name": "uitester-puppeteer",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "基于puppeteer的UI自动化测试",
   "main": "index.js",
   "scripts": {
@@ -17,9 +17,11 @@
   "author": "wangmingquan",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.17.15",
     "log-mini": "^1.0.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "mockjs": "^1.0.1-beta3",
     "moment": "^2.24.0",
     "puppeteer": "^1.17.0"
   },

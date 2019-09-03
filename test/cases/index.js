@@ -6,21 +6,21 @@ let describe = {
     {
       name: '打开测试页面',
       action: 'open',
-      value: 'http://123.57.38.206:92/'
+      value: '<global: origin>'
     },
     {
       name: '输入用户名',
       action: 'type',
       // selector: '#username',
       selector: '//*[@id="username"]',
-      value: 'admin',
+      value: '<global: username>',
       screenshot: true
     },
     {
       name: '输入密码',
       action: 'type',
       selector: '#password',
-      value: '123456',
+      value: '<global: password>',
       screenshot: true
     },
     {
@@ -85,5 +85,37 @@ for (let it of its) {
     it
   });
 }
+
+cases.push({
+  describe: '测试TodoList',
+  newBrowser: false,
+  newPage: false,
+  actions: [
+    {
+      name: '打开 todo 页面',
+      action: 'open',
+      value: '<global: origin>/todo',
+      waitAfter: 300
+    },
+    {
+      name: '输入任务',
+      action: 'type',
+      selector: '#task',
+      value: '<mock: @csentence>'
+    },
+    {
+      name: '添加任务',
+      action: 'click',
+      selector: '#addnew',
+      waitAfter: 2000
+    }
+  ],
+  it: {
+    name: '查看是否添加成功',
+    selector: '#tasklist>li',
+    value: 0,
+    condition: 'countMore'
+  }
+});
 
 module.exports = cases;

@@ -5,6 +5,11 @@ const log = require('log-mini');
 let doTest = function (testcase) {
   return new Promise((resolve) => {
     let uiTester = new Uitester(testcase, {
+      global: {
+        username: 'admin',
+        password: '123456',
+        origin: 'http://123.57.38.206:92'
+      },
       dev: true,
       screenshotPrePath: '/Users/wangmingquan/Downloads'
     });

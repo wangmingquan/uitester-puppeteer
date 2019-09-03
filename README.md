@@ -4,13 +4,13 @@
 
 ## 使用
 
-安装
+### 安装
 
 ```shell
 npm i uitester-puppeteer -S
 ```
 
-使用
+### 具体使用
 
 ```javascript
 const Tester = require('uitester-puppeteer');
@@ -83,17 +83,18 @@ const cases = [
 ];
 ```
 
-**options:**
+### options
 
 |属性|说明|类型|默认值|
 |--|--|--|--|
+| global | 全局变量，可供测试用例中的 action、it、afterIt 的 value 使用 | map | - |
 | dev | 决定是否打开调试日志、是否headless | boolean | false |
 | sandBox | 是否沙盒模式 | boolean | false |
 | clientWidth | 默认视口宽度 | number | 1024 |
 | clientHeight | 默认视口高度 | number | 768 |
 | screenshotPrePath | 截图存放目录，需要保证其写入权限没问题。目录不存在，会自动创建。 | string | 无 |
 
-**describle：**
+## describle
 
 |字段|解释|
 |--|--|
@@ -103,12 +104,12 @@ const cases = [
 | it | 执行的验证 |
 | afterIt | 数据格式和actions是一样的，其作用一般是用来清除前面actions带来的副作用。比如，测试过程中建立了一条数据，我们就可以在afterIt里面定义action，把这条数据删除掉。 |
 
-**actions && afterIt字段定义：**
+### actions && afterIt字段定义
 
 | 字段 | 解释 | 值 |
 |--|--|--|
 | name | 动作名称 | - |
-| value | 动作可能涉及到的内容，比如打开的url、填充的值 | - |
+| value | 动作可能涉及到的内容，比如打开的url、填充的值，支持引用和模拟 | - |
 | action | 执行动作，后续会逐步扩展 | 详情见action管理表格 |
 | selector | 选择器 | 支持css选择器和xpath |
 | screenshot | 产品报告中是否截图（初始化不传screenshotPrePath，则不会截图） | 默认false |
@@ -122,7 +123,7 @@ const cases = [
 
 > 当action===frame的时候，可以通过iframe的 frameName、frameUrl、frameTitle属性来定位（只需要一个字段即可，frameName > frameUrl > frameTitle）
 
-**action管理：**
+### action管理
 
 | name | 说明 |
 |--|--|
@@ -151,14 +152,14 @@ setCookie时，其value示例：
 }
 ```
 
-**it字段定义：**
+### it字段定义
 
 | 字段 | 说明 | 类型 |
 |--|--|--|
 | name | 验证器名称 | string |
 | selector | 选择器 | string |
 | condition | 条件, 参考下边 **“it.condition字段定义”** | string |
-| value | 参考下边 **“it.condition字段定义”** | boolean \| string \| number |
+| value | 用来做判断的值，支持引用和模拟 | boolean \| string \| number |
 | screenshot | 是否截图 | false |
 
 **it.condition字段定义：**
@@ -182,3 +183,101 @@ setCookie时，其value示例：
 | countNotEqual | selectors的长度不为value | string |
 | countMore | selectors的长度大于value | number |
 | countLess | selectors的长度小于value | number |
+
+## value 值的引用和模拟
+
+从 `0.1.0` 版本开始，测试用例中的 action、it、afterIt 中的 value 值支持引用和模拟。
+
+而被引用的 `global` 里面的值也可以被模拟。
+
+### 引用
+
+引用是指从 global 对象中进行引用。相关模板字符串为：`'<global:VARIABLE>'`。
+
+如果 `VARIABLE` 变量在 global 中不存在，则返回空字符串。
+
+**示例：**
+
+```javascript
+const Tester = require('uitester-puppeteer');
+const cases = [
+  {
+    describe: '全局测试',
+    newBrowser: false,
+    newPage: false,
+    actions: [
+      {
+        name: '填充用户名',
+        value: '<global:username>',
+        action: 'open',
+        waitForAfter: 1000,
+        screenshot: true
+      },
+      ...
+    ],
+    ...
+  }
+];
+const options = {
+  global: {
+    username: 'admin'
+  },
+  ...
+};
+let tester = new Tester(cases, options);
+```
+
+### 模拟
+
+数据的模拟基于 [mock.js](https://github.com/nuysoft/Mock/wiki/Syntax-Specification)。相关模板字符串为：`'<mock:@PLACEHOLDER>'`。PLACEHOLDER 为 mock.js 的占位符。
+
+模板字符串中的 `@占位符` 与 [Mock.Random](https://github.com/nuysoft/Mock/wiki/Mock.Random) 中的方法一一对应
+
+**Mock.random 子方法：**
+
+| Type | Method |
+| --- | --- |
+| Basic | boolean, natural, integer, float, character, string, range, date, time, datetime, now |
+| Image | image, dataImage |
+| Color | color |
+| Text | paragraph, sentence, word, title, cparagraph, csentence, cword, ctitle |
+| Name | first, last, name, cfirst, clast, cname |
+| Web | url, domain, email, ip, tld |
+| Address | region, province, city, county, zip |
+| Miscellaneous | guid, id |
+
+**示例：**
+
+```javascript
+const Tester = require('uitester-puppeteer');
+const cases = [
+  {
+    describe: '全局测试',
+    newBrowser: false,
+    newPage: false,
+    actions: [
+      {
+        name: '填充任务 ID',
+        value: '<global:taskId>',
+        action: 'type',
+        selector: '#taskId'
+      },
+      {
+        name: '填充邮箱',
+        value: '<mock:@email>',
+        action: 'type',
+        selector: '#email'
+      },
+      ...
+    ],
+    ...
+  }
+];
+const options = {
+  global: {
+    taskId: '<mock:@guid>'
+  },
+  ...
+};
+let tester = new Tester(cases, options);
+```

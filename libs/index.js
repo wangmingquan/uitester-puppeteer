@@ -3,11 +3,12 @@ const start = require('./start.js');
 const path = require('path');
 const mkdirp = require('mkdirp');
 const moment = require('moment');
+const mockData = require('./utils/mock.js');
 
 class Tester extends events.EventEmitter {
   constructor (list, options = {}) {
     super();
-    this.list = list;
+    this.list = mockData(list, options.global);
     this.options = options;
     this.page = null;
     this.iframe = null;
