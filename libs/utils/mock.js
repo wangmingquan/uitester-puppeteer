@@ -32,7 +32,9 @@ module.exports = (_list, global = {}) => {
     for (let item of describle.actions) {
       item.value = replace(item.value);
     }
-    describle.it.value = replace(describle.it.value);
+    for (let item of describle.its) {
+      item.value = replace(item.value);
+    }
     for (let item of describle.afterIt || []) {
       item.value = replace(item.value);
     }

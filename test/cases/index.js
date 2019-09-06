@@ -101,7 +101,7 @@ cases.push({
       name: '输入任务',
       action: 'type',
       selector: '#task',
-      value: '<mock: @csentence>'
+      value: '<global: taskName>'
     },
     {
       name: '添加任务',
@@ -110,12 +110,20 @@ cases.push({
       waitAfter: 2000
     }
   ],
-  it: {
-    name: '查看是否添加成功',
-    selector: '#tasklist>li',
-    value: 0,
-    condition: 'countMore'
-  }
+  its: [
+    {
+      name: '检查添加后的数量',
+      selector: '#tasklist>li',
+      value: 0,
+      condition: 'countMore'
+    },
+    {
+      name: '检查添加的值是否正确',
+      selector: '#tasklist>li:nth-of-type(1)',
+      value: ' <global: taskName>',
+      condition: 'equal'
+    }
+  ]
 });
 
 module.exports = cases;

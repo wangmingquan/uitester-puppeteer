@@ -8,7 +8,8 @@ let doTest = function (testcase) {
       global: {
         username: 'admin',
         password: '123456',
-        origin: 'http://123.57.38.206:92'
+        origin: 'http://123.57.38.206:92',
+        taskName: '<mock: @csentence>'
       },
       dev: true,
       screenshotPrePath: '/Users/wangmingquan/Downloads'

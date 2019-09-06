@@ -1,6 +1,6 @@
 {
   "name": "uitester-puppeteer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "基于puppeteer的UI自动化测试",
   "main": "index.js",
   "scripts": {

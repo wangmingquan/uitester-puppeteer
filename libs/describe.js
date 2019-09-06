@@ -18,29 +18,37 @@ module.exports = async (tester, describe) => {
       }
     }
   };
+  let itRel = null;
+  let lastIt = null;
+  let checkIts = async (its) => {
+    for (let item of its) {
+      lastIt = item;
+      itRel = await it(tester, item).catch(e => {
+        // it 执行失败, 测试失败
+        err = e;
+        failFlag = true;
+      });
+      if (failFlag) {
+        break;
+      }
+    }
+  };
   tester.emit('describe_start', describe);
 
   await doActions(describe.actions);
 
   if (!failFlag) {
     // 执行最终判断
-
-    let itRel = await it(tester, describe.it).catch(e => {
-      err = e;
-      // it 执行失败, 测试失败
-      failFlag = true;
-    });
+    await checkIts(describe.its);
 
     if (!itRel) {
       err = new Error(`
-        测试用例 <${describe.it.name}>验证失败:
-        condition <${describe.it.condition}>,
-        selector <${describe.it.selector}>,
-        value <${describe.it.value || ''}>
+        测试用例 <${lastIt.name}>验证失败:
+        condition <${lastIt.condition}>,
+        selector <${lastIt.selector}>,
+        value <${lastIt.value || ''}>
       `);
       failFlag = true;
-    } else {
-      tester.emit('it_done', describe.it);
     }
   }
 

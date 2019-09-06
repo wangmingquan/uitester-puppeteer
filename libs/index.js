@@ -8,7 +8,12 @@ const mockData = require('./utils/mock.js');
 class Tester extends events.EventEmitter {
   constructor (list, options = {}) {
     super();
-    this.list = mockData(list, options.global);
+    // 测试前置的数据处理
+    this.list = list;
+    this.formateIts(); // 支持两种数据格式的 it
+    this.list = mockData(this.list, options.global); // mock 的处理
+    this.formateXpath(); // 支持 xpath
+
     this.options = options;
     this.page = null;
     this.iframe = null;
@@ -18,7 +23,6 @@ class Tester extends events.EventEmitter {
   }
 
   async start () {
-    this.formarteList();
     await start(this);
   }
 
@@ -27,7 +31,7 @@ class Tester extends events.EventEmitter {
    * @memberof Tester
    * @returns {void}
    */
-  formarteList () {
+  formateXpath () {
     let xPathToCss = (xpath) => {
       return xpath
         .replace(/\[(\d+?)\]/g, function (s, m1) { return '[' + (m1 - 1) + ']'; })
@@ -43,14 +47,37 @@ class Tester extends events.EventEmitter {
           action.selector = xPathToCss(action.selector);
         }
       }
-      if (/^\/\/.+/.test(item.it.selector)) {
-        item.it.selector = xPathToCss(item.it.selector);
+      for (let it of item.its) {
+        if (/^\/\/.+/.test(it.selector)) {
+          it.selector = xPathToCss(it.selector);
+        }
       }
+      // if (/^\/\/.+/.test(item.it.selector)) {
+      //   item.it.selector = xPathToCss(item.it.selector);
+      // }
       for (let action of item.afterIt || []) {
         if (/^\/\/.+/.test(action.selector)) {
           action.selector = xPathToCss(action.selector);
         }
       }
+    }
+  }
+
+  /**
+   * @description 对测试用例 its 的格式化
+   * @memberof Tester
+   * @returns {void}
+   */
+
+  formateIts () {
+    for (let item of this.list) {
+      if (!item.its) {
+        item.its = [];
+        if (item.it) {
+          item.its.push(item.it);
+        }
+      }
+      delete item.it;
     }
   }
 

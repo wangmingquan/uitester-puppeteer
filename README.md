@@ -71,11 +71,11 @@ const cases = [
         waitForAfter: 1000
       },
     ],
-    it: {
+    it: [{
       name: '测试验证',
       selector: '#content',
       condition: 'hasText'
-    },
+    }],
     afterIt: [
         // 同actions
     ]
@@ -101,7 +101,8 @@ const cases = [
 |newBrowser|一般连续写多个 describe，而且后面的 describe 依赖前面的 describe （比如在之前的 action 中本地记录过cookie、localStorage、sessionStorage），所以默认一个完整测试中，新的 describe 不重新打开浏览器。反之，将会销毁之前的浏览器，重新打开浏览器。|
 | newPage | 一般连续写多个 describe，而且后面的 describe 依赖前面的 describe （比如在之前的 action 中已经登陆过，进入到了某个页面），所以默认一个完整测试中，新的 describe 不重新打开新的页面。反之，将会关闭之前的page，重新打开一个新的page（这时候往往需要重新 open 一个 url） |
 | actions | 执行的动作 |
-| it | 执行的验证 |
+| it | 执行的验证（只有一个验证条件，建议都用 its 的方式） |
+| its | 执行的验证（数组，有多个验证条件） |
 | afterIt | 数据格式和actions是一样的，其作用一般是用来清除前面actions带来的副作用。比如，测试过程中建立了一条数据，我们就可以在afterIt里面定义action，把这条数据删除掉。 |
 
 ### actions && afterIt字段定义
