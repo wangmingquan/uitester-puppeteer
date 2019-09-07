@@ -18,18 +18,21 @@ module.exports = async (tester, describe) => {
       }
     }
   };
-  let itRel = null;
-  let lastIt = null;
+  let lastErrIt = null;
   let checkIts = async (its) => {
     for (let item of its) {
-      lastIt = item;
-      itRel = await it(tester, item).catch(e => {
+      item.success = true;
+      let itResult = await it(tester, item).catch(e => {
         // it 执行失败, 测试失败
         err = e;
         failFlag = true;
+        item.success = false;
+        lastErrIt = item;
       });
-      if (failFlag) {
-        break;
+      if (!itResult) {
+        failFlag = true;
+        item.success = false;
+        lastErrIt = item;
       }
     }
   };
@@ -41,12 +44,12 @@ module.exports = async (tester, describe) => {
     // 执行最终判断
     await checkIts(describe.its);
 
-    if (!itRel) {
+    if (lastErrIt) {
       err = new Error(`
-        测试用例 <${lastIt.name}>验证失败:
-        condition <${lastIt.condition}>,
-        selector <${lastIt.selector}>,
-        value <${lastIt.value || ''}>
+        测试用例 <${lastErrIt.name}>验证失败:
+        condition <${lastErrIt.condition}>,
+        selector <${lastErrIt.selector}>,
+        value <${lastErrIt.value || ''}>
       `);
       failFlag = true;
     }
